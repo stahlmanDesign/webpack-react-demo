@@ -58,30 +58,181 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
 
+	// component similar to JS function
+
 	var Hello = function (_React$Component) {
-	  _inherits(Hello, _React$Component);
+	    _inherits(Hello, _React$Component);
 
-	  function Hello() {
-	    _classCallCheck(this, Hello);
+	    function Hello() {
+	        _classCallCheck(this, Hello);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Hello).apply(this, arguments));
-	  }
-
-	  _createClass(Hello, [{
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'HELLO!'
-	      );
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Hello).apply(this, arguments));
 	    }
-	  }]);
 
-	  return Hello;
+	    _createClass(Hello, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var now = new Date();
+	            var result = React.createElement(
+	                'div',
+	                null,
+	                'HEllO! ',
+	                new Date().toTimeString()
+	            );
+	            return result;
+	        }
+	    }]);
+
+	    return Hello;
 	}(React.Component);
 
-	ReactDOM.render(React.createElement(Hello, null), document.getElementById('target-container'));
+	var RobotBox = function (_React$Component2) {
+	    _inherits(RobotBox, _React$Component2);
+
+	    function RobotBox() {
+	        _classCallCheck(this, RobotBox);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RobotBox).apply(this, arguments));
+	    }
+
+	    _createClass(RobotBox, [{
+	        key: 'render',
+	        value: function render() {
+	            // instead of passing arguments, read properties using this.props
+	            return React.createElement(
+	                'div',
+	                null,
+	                'Hello from ',
+	                React.createElement(
+	                    'span',
+	                    { className: 'message' },
+	                    ' ',
+	                    'Mr. ' + this.props.author + '’s friend',
+	                    ' ',
+	                    this.props.topic
+	                ),
+	                React.createElement('img', { src: this.props.avatarUrl })
+	            );
+	        }
+	    }]);
+
+	    return RobotBox;
+	}(React.Component);
+
+	var StoryBox = function (_React$Component3) {
+	    _inherits(StoryBox, _React$Component3);
+
+	    function StoryBox() {
+	        _classCallCheck(this, StoryBox);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(StoryBox).apply(this, arguments));
+	    }
+
+	    _createClass(StoryBox, [{
+	        key: 'render',
+	        value: function render() {
+	            var topicsList = ["HTML", "JavaScript", "React"];
+	            return React.createElement(
+	                'div',
+	                null,
+	                'Using ES6 syntax: topic =>',
+	                React.createElement(
+	                    'ul',
+	                    null,
+	                    topicsList.map(function (topic, i) {
+	                        return React.createElement(
+	                            'li',
+	                            null,
+	                            topic
+	                        );
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return StoryBox;
+	}(React.Component);
+
+	var StoryBoxES5 = function (_React$Component4) {
+	    _inherits(StoryBoxES5, _React$Component4);
+
+	    function StoryBoxES5() {
+	        _classCallCheck(this, StoryBoxES5);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(StoryBoxES5).apply(this, arguments));
+	    }
+
+	    _createClass(StoryBoxES5, [{
+	        key: 'render',
+	        value: function render() {
+	            var topicsList = [["HTML", "JavaScript", "React"], ["Dog food", "beans", "cantelope"]];
+	            var rnd = Math.floor(Math.random() * 2);
+	            return React.createElement(
+	                'div',
+	                null,
+	                'Using ES5 syntax: function(topic)',
+	                React.createElement('br', null),
+	                'Also randomly selecting array: topicsList[',
+	                rnd,
+	                '].map',
+	                React.createElement(
+	                    'ul',
+	                    null,
+	                    topicsList[rnd].map(function (topic, i) {
+	                        // RobotBox is a React component which can have arguments in the form of properties
+	                        // look like HTML attributes
+	                        var commentId = "id" + i;
+	                        return React.createElement(
+	                            'li',
+	                            null,
+	                            ' ',
+	                            React.createElement(RobotBox, { author: 'King Kong', topic: topic, key: commentId })
+	                        );
+	                    })
+	                )
+	            );
+	        }
+	    }, {
+	        key: '_getComment',
+	        value: function _getComment(com) {
+	            return "test test " + com + " some rand ";
+	        }
+	    }]);
+
+	    return StoryBoxES5;
+	}(React.Component);
+
+	// set up divs to render components
+
+
+	var targets = []; // array of dom elements which we will use to render components
+
+	for (var i = 0; i < 20; i++) {
+	    var newEl = document.createElement('div');
+	    var newHr = document.createElement('hr');
+	    newEl.id = "target" + i;
+	    newEl.innerHTML = newEl.id;
+	    var content = document.getElementById('content');
+	    content.appendChild(newEl);
+	    content.appendChild(newHr);
+
+	    targets.push(document.getElementById('target' + i));
+	}
+
+	ReactDOM.render(React.createElement(Hello, null), targets[0]);
+
+	setInterval(function () {
+	    // each compnent has a render function
+	    // UPPERCASE elements are React. lowercase are normal DOM elements
+
+	    ReactDOM.render(React.createElement(Hello, null), targets[1]);
+
+	    ReactDOM.render(React.createElement(RobotBox, { author: 'Justinian', avatarUrl: 'http://dhg7upb7j7jqa.cloudfront.net/powering_up_with_react/assets/images/logo-course-ba8641ec-bc39-4532-897e-7743c00b3162.svg' }), targets[2]);
+	    ReactDOM.render(React.createElement(StoryBox, null), targets[3]);
+	    ReactDOM.render(React.createElement(StoryBoxES5, { author: 'King Kong' }), targets[4]);
+	}, 2000);
 
 /***/ },
 /* 1 */
