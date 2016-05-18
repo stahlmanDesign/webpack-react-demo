@@ -48,161 +48,413 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(33);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // document.write('hello');
+	// same as var React = require('react');
 
-	// document.write('hello');
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(33);
 
 	// component similar to JS function
 
 	var Hello = function (_React$Component) {
-	    _inherits(Hello, _React$Component);
+	  _inherits(Hello, _React$Component);
 
-	    function Hello() {
-	        _classCallCheck(this, Hello);
+	  function Hello() {
+	    _classCallCheck(this, Hello);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Hello).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Hello).apply(this, arguments));
+	  }
+
+	  _createClass(Hello, [{
+	    key: 'render',
+	    value: function render() {
+
+	      var now = new Date();
+	      var result = _react2.default.createElement(
+	        'div',
+	        null,
+	        'HEllO! ',
+	        new Date().toTimeString()
+	      );
+	      return result;
 	    }
+	  }]);
 
-	    _createClass(Hello, [{
-	        key: 'render',
-	        value: function render() {
-
-	            var now = new Date();
-	            var result = React.createElement(
-	                'div',
-	                null,
-	                'HEllO! ',
-	                new Date().toTimeString()
-	            );
-	            return result;
-	        }
-	    }]);
-
-	    return Hello;
-	}(React.Component);
+	  return Hello;
+	}(_react2.default.Component);
 
 	var RobotBox = function (_React$Component2) {
-	    _inherits(RobotBox, _React$Component2);
+	  _inherits(RobotBox, _React$Component2);
 
-	    function RobotBox() {
-	        _classCallCheck(this, RobotBox);
+	  function RobotBox() {
+	    _classCallCheck(this, RobotBox);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RobotBox).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(RobotBox).apply(this, arguments));
+	  }
+
+	  _createClass(RobotBox, [{
+	    key: 'render',
+	    value: function render() {
+	      // instead of passing arguments, read properties using this.props
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'Hello from ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'message' },
+	          'Mr. ' + this.props.author + '’s friend',
+	          ' ',
+	          this.props.topic
+	        ),
+	        _react2.default.createElement('img', { src: this.props.avatarUrl })
+	      );
 	    }
+	  }]);
 
-	    _createClass(RobotBox, [{
-	        key: 'render',
-	        value: function render() {
-	            // instead of passing arguments, read properties using this.props
-	            return React.createElement(
-	                'div',
-	                null,
-	                'Hello from ',
-	                React.createElement(
-	                    'span',
-	                    { className: 'message' },
-	                    ' ',
-	                    'Mr. ' + this.props.author + '’s friend',
-	                    ' ',
-	                    this.props.topic
-	                ),
-	                React.createElement('img', { src: this.props.avatarUrl })
-	            );
-	        }
-	    }]);
-
-	    return RobotBox;
-	}(React.Component);
+	  return RobotBox;
+	}(_react2.default.Component);
 
 	var StoryBox = function (_React$Component3) {
-	    _inherits(StoryBox, _React$Component3);
+	  _inherits(StoryBox, _React$Component3);
 
-	    function StoryBox() {
-	        _classCallCheck(this, StoryBox);
+	  function StoryBox() {
+	    _classCallCheck(this, StoryBox);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(StoryBox).apply(this, arguments));
-	    }
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(StoryBox).apply(this, arguments));
+	  }
 
-	    _createClass(StoryBox, [{
-	        key: 'render',
-	        value: function render() {
-	            var topicsList = ["HTML", "JavaScript", "React"];
-	            return React.createElement(
-	                'div',
-	                null,
-	                'Using ES6 syntax: topic =>',
-	                React.createElement(
-	                    'ul',
-	                    null,
-	                    topicsList.map(function (topic, i) {
-	                        return React.createElement(
-	                            'li',
-	                            null,
-	                            topic
-	                        );
-	                    })
-	                )
+	  _createClass(StoryBox, [{
+	    key: 'render',
+	    value: function render() {
+	      var topicsList = ["HTML", "JavaScript", "React"];
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'Using ES6 syntax: topic =>',
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          topicsList.map(function (topic, i) {
+	            return _react2.default.createElement(
+	              'li',
+	              null,
+	              topic
 	            );
-	        }
-	    }]);
+	          })
+	        )
+	      );
+	    }
+	  }]);
 
-	    return StoryBox;
-	}(React.Component);
+	  return StoryBox;
+	}(_react2.default.Component);
 
 	var StoryBoxES5 = function (_React$Component4) {
-	    _inherits(StoryBoxES5, _React$Component4);
+	  _inherits(StoryBoxES5, _React$Component4);
 
-	    function StoryBoxES5() {
-	        _classCallCheck(this, StoryBoxES5);
+	  function StoryBoxES5() {
+	    _classCallCheck(this, StoryBoxES5);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(StoryBoxES5).apply(this, arguments));
-	    }
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(StoryBoxES5).apply(this, arguments));
+	  }
 
-	    _createClass(StoryBoxES5, [{
-	        key: 'render',
-	        value: function render() {
-	            var topicsList = [["HTML", "JavaScript", "React"], ["Dog food", "beans", "cantelope"]];
-	            var rnd = Math.floor(Math.random() * 2);
-	            return React.createElement(
-	                'div',
-	                null,
-	                'Using ES5 syntax: function(topic)',
-	                React.createElement('br', null),
-	                'Also randomly selecting array: topicsList[',
-	                rnd,
-	                '].map',
-	                React.createElement(
-	                    'ul',
-	                    null,
-	                    topicsList[rnd].map(function (topic, i) {
-	                        // RobotBox is a React component which can have arguments in the form of properties
-	                        // look like HTML attributes
-	                        var commentId = "id" + i;
-	                        return React.createElement(
-	                            'li',
-	                            null,
-	                            ' ',
-	                            React.createElement(RobotBox, { author: 'King Kong', topic: topic, key: commentId })
-	                        );
-	                    })
-	                )
+	  _createClass(StoryBoxES5, [{
+	    key: 'render',
+	    value: function render() {
+	      var topicsList = [["HTML", "JavaScript", "React"], ["Dog food", "beans", "cantelope banana"]];
+	      var rnd = Math.floor(Math.random() * 2);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'Using ES5 syntax: function(topic)',
+	        _react2.default.createElement('br', null),
+	        'Also randomly selecting array: topicsList[',
+	        rnd,
+	        '].map',
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          topicsList[rnd].map(function (topic, i) {
+	            // RobotBox is a React component which can have arguments in the form of properties
+	            // look like HTML attributes
+	            var commentId = "id" + i;
+	            return _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(RobotBox, {
+	                author: 'King Dong',
+	                topic: topic,
+	                key: commentId })
 	            );
-	        }
-	    }, {
-	        key: '_getComment',
-	        value: function _getComment(com) {
-	            return "test test " + com + " some rand ";
-	        }
-	    }]);
+	          })
+	        )
+	      );
+	    }
+	  }, {
+	    key: '_getComment',
+	    value: function _getComment(com) {
+	      return "test test " + com + " some rand ";
+	    }
+	  }]);
 
-	    return StoryBoxES5;
-	}(React.Component);
+	  return StoryBoxES5;
+	}(_react2.default.Component);
+
+	var Comment = function (_React$Component5) {
+	  _inherits(Comment, _React$Component5);
+
+	  function Comment() {
+	    _classCallCheck(this, Comment);
+
+	    // must call as first thing
+
+	    var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this));
+
+	    _this5.state = { isAbusive: false }; // set inital state
+	    return _this5;
+	  }
+
+	  _createClass(Comment, [{
+	    key: 'render',
+	    value: function render() {
+
+	      var commentBody = void 0;
+	      if (!this.state.isAbusive) {
+	        commentBody = this.props.body;
+	      } else {
+	        commentBody = _react2.default.createElement(
+	          'em',
+	          null,
+	          ' Content marked as abusive '
+	        );
+	      }
+
+	      var buttonText = 'Hide abusive comment?';
+	      if (this.state.isAbusive) {
+	        buttonText = 'See the ugly truth?';
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'comment' },
+	        _react2.default.createElement('img', {
+	          src: this.props.avatarUrl,
+	          alt: this.props.author + '\'s picture' }),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'comment-header' },
+	          this.props.author
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'comment-body' },
+	          commentBody
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this._toggleAbuse.bind(this) },
+	          buttonText
+	        )
+	      );
+	    }
+	  }, {
+	    key: '_toggleAbuse',
+	    value: function _toggleAbuse(event) {
+	      event.preventDefault(); // prevent page reload when called
+	      this.setState({ isAbusive: !this.state.isAbusive });
+	    }
+	  }]);
+
+	  return Comment;
+	}(_react2.default.Component);
+
+	var CommentBox = function (_React$Component6) {
+	  _inherits(CommentBox, _React$Component6);
+
+	  function CommentBox() {
+	    _classCallCheck(this, CommentBox);
+
+	    var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).call(this));
+
+	    _this6.state = {
+	      showComments: false,
+	      comments: [{ id: 1, author: 'Morgan McCircuit', body: 'Great picture!', avatarUrl: 'images/default-avatar.png' }, { id: 2, author: 'Bending Bender', body: 'Excellent stuff', avatarUrl: 'images/default-avatar.png' }]
+	    };
+	    return _this6;
+	  }
+
+	  _createClass(CommentBox, [{
+	    key: 'render',
+	    value: function render() {
+	      var comments = this._getComments();
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'comment-box' },
+	        _react2.default.createElement(CommentForm, { addComment: this._addComment.bind(this) }),
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Comments'
+	        ),
+	        this._getPopularMessage(comments.length),
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'comment-count' },
+	          this._getCommentsTitle(comments.length)
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'comment-list' },
+	          comments
+	        )
+	      );
+	    }
+	  }, {
+	    key: '_getPopularMessage',
+	    value: function _getPopularMessage(commentCount) {
+	      var POPULAR_COUNT = 10;
+	      if (commentCount > POPULAR_COUNT) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          'This post is getting really popular, don\'t miss out!'
+	        );
+	      }
+	    }
+	  }, {
+	    key: '_getComments',
+	    value: function _getComments() {
+	      return this.state.comments.map(function (comment) {
+	        return _react2.default.createElement(Comment, {
+	          author: comment.author,
+	          body: comment.body,
+	          avatarUrl: comment.avatarUrl,
+	          key: comment.id });
+	      });
+	    }
+	  }, {
+	    key: '_getCommentsTitle',
+	    value: function _getCommentsTitle(commentCount) {
+	      if (commentCount === 0) {
+	        return 'No comments yet';
+	      } else if (commentCount === 1) {
+	        return '1 comment';
+	      } else {
+	        return commentCount + ' comments';
+	      }
+	    }
+	  }, {
+	    key: '_addComment',
+	    value: function _addComment(commentAuthor, commentBody) {
+	      var comment = {
+	        id: Math.floor(Math.random() * (9999 - this.state.comments.length + 1)) + this.state.comments.length,
+	        author: commentAuthor,
+	        body: commentBody
+	      };
+
+	      this.setState({
+	        comments: this.state.comments.concat([comment])
+	      });
+	    }
+	  }]);
+
+	  return CommentBox;
+	}(_react2.default.Component);
+
+	var CommentForm = function (_React$Component7) {
+	  _inherits(CommentForm, _React$Component7);
+
+	  function CommentForm() {
+	    _classCallCheck(this, CommentForm);
+
+	    var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this));
+
+	    _this7.state = {
+	      characters: 0
+	    };
+	    return _this7;
+	  }
+
+	  _createClass(CommentForm, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this8 = this;
+
+	      return _react2.default.createElement(
+	        'form',
+	        { className: 'comment-form', onSubmit: this._handleSubmit.bind(this) },
+	        _react2.default.createElement(
+	          'label',
+	          null,
+	          'New comment'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'comment-form-fields' },
+	          _react2.default.createElement('input', { placeholder: 'Name:', ref: function ref(c) {
+	              return _this8._author = c;
+	            } }),
+	          _react2.default.createElement('textarea', { placeholder: 'Comment:', ref: function ref(c) {
+	              return _this8._body = c;
+	            }, onChange: this._getCharacterCount.bind(this) })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.state.characters,
+	          ' characters'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'comment-form-actions' },
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'submit' },
+	            'Post comment'
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: '_getCharacterCount',
+	    value: function _getCharacterCount(e) {
+	      this.setState({
+	        characters: this._body.value.length
+	      });
+	    }
+	  }, {
+	    key: '_handleSubmit',
+	    value: function _handleSubmit(event) {
+	      event.preventDefault();
+	      if (!this._author.value || !this._body.value) {
+	        alert("Please enter you name and comment");
+	        return; // don't add comment of nothing
+	      }
+
+	      this.props.addComment(this._author.value, this._body.value);
+
+	      this._author.value = '';
+	      this._body.value = '';
+
+	      this.setState({ characters: 0 });
+	    }
+	  }]);
+
+	  return CommentForm;
+	}(_react2.default.Component);
 
 	// set up divs to render components
 
@@ -210,28 +462,37 @@
 	var targets = []; // array of dom elements which we will use to render components
 
 	for (var i = 0; i < 20; i++) {
-	    var newEl = document.createElement('div');
-	    var newHr = document.createElement('hr');
-	    newEl.id = "target" + i;
-	    newEl.innerHTML = newEl.id;
-	    var content = document.getElementById('content');
-	    content.appendChild(newEl);
-	    content.appendChild(newHr);
+	  var newEl = document.createElement('div');
+	  var newHr = document.createElement('hr');
+	  newEl.id = "target" + i;
+	  newEl.innerHTML = newEl.id;
+	  var content = document.getElementById('content');
+	  content.appendChild(newEl);
+	  content.appendChild(newHr);
 
-	    targets.push(document.getElementById('target' + i));
+	  targets.push(document.getElementById('target' + i));
 	}
 
-	ReactDOM.render(React.createElement(Hello, null), targets[0]);
+	_reactDom2.default.render(_react2.default.createElement(Hello, null), targets[0]);
 
 	setInterval(function () {
-	    // each compnent has a render function
-	    // UPPERCASE elements are React. lowercase are normal DOM elements
+	  // each compnent has a render function
+	  // UPPERCASE elements are React. lowercase are normal DOM elements
 
-	    ReactDOM.render(React.createElement(Hello, null), targets[1]);
+	  _reactDom2.default.render(_react2.default.createElement(Hello, null), targets[1]);
 
-	    ReactDOM.render(React.createElement(RobotBox, { author: 'Justinian', avatarUrl: 'http://dhg7upb7j7jqa.cloudfront.net/powering_up_with_react/assets/images/logo-course-ba8641ec-bc39-4532-897e-7743c00b3162.svg' }), targets[2]);
-	    ReactDOM.render(React.createElement(StoryBox, null), targets[3]);
-	    ReactDOM.render(React.createElement(StoryBoxES5, { author: 'King Kong' }), targets[4]);
+	  _reactDom2.default.render(_react2.default.createElement(RobotBox, {
+	    author: 'Justinian',
+	    avatarUrl: 'http://dhg7upb7j7jqa.cloudfront.net/powering_up_with_react/assets/images/logo-course-ba8641ec-bc39-4532-897e-7743c00b3162.svg' }), targets[2]);
+	  _reactDom2.default.render(_react2.default.createElement(StoryBox, null), targets[3]);
+	  _reactDom2.default.render(_react2.default.createElement(StoryBoxES5, { author: 'King Kong' }), targets[4]);
+	  _reactDom2.default.render(_react2.default.createElement(Comment, {
+	    author: 'cutie cat',
+	    body: 'fud is good',
+	    avatarUrl: 'http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png'
+	  }), targets[5]);
+	  _reactDom2.default.render(_react2.default.createElement(CommentBox, null), // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
+	  targets[6]);
 	}, 2000);
 
 /***/ },
