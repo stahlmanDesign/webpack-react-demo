@@ -1,32 +1,56 @@
 // document.write('hello');
 import React from 'react'; // same as var React = require('react');
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 // component similar to JS function
 class Hello extends React.Component {
 
-  render() {
+  constructor(){
+    super(); // must call as first thing
+    this.state = {time : ""}; // set inital state
+  }
 
+  render() {
+    var message = "Time moves on...";
     var now = new Date();
+    var nowString = now.toTimeString();
+    var self = this;
+    if (this.props.update){
+      setInterval(function() {
+        self._setTime(nowString)
+      }, 1000)
+    }else{
+      message = "Time at page load"
+    }
     var result =
     <div>
-      HEllO! {new Date().toTimeString()}
+      {message} {nowString}
     </div>
-    ;
+
     return result;
   }
+
+  _setTime(nowString){
+    if (nowString != this.state.time) {
+      this.setState({time: nowString})
+    }
+  }
 }
+
 
 class RobotBox extends React.Component {
   render() {
     // instead of passing arguments, read properties using this.props
     return <div>
-      Hello from <span className="message">
-      {`Mr. ${this.props.author}’s friend`} {this.props.topic}
-    </span>
-    <img src={this.props.avatarUrl} />
-  </div>
-}
+      Hello from
+      <span className="message">
+        {`Mr. ${this.props.author}’s friend`}
+        {this.props.topic}
+      </span>
+      <img src={this.props.avatarUrl}/>
+    </div>
+  }
 }
 
 class StoryBox extends React.Component {
@@ -92,7 +116,9 @@ class Comment extends React.Component {
 
     let commentBody;
     if (!this.state.isAbusive) {commentBody = this.props.body}
-    else { commentBody = <em> Content marked as abusive </em> }
+    else { commentBody =
+      <em> Content marked as abusive </em>
+    }
 
     let buttonText = 'Hide abusive comment?'
     if (this.state.isAbusive){buttonText='See the ugly truth?'}
@@ -140,7 +166,9 @@ class CommentBox extends React.Component {
         <CommentForm addComment={this._addComment.bind(this)} />
         <h3>Comments</h3>
         {this._getPopularMessage(comments.length)}
-        <h4 className="comment-count">{this._getCommentsTitle(comments.length)}</h4>
+        <h4 className="comment-count">
+          {this._getCommentsTitle(comments.length)}
+        </h4>
         <div className="comment-list">
           {comments}
         </div>
@@ -151,19 +179,23 @@ class CommentBox extends React.Component {
   _getPopularMessage(commentCount) {
     const POPULAR_COUNT = 10;
     if (commentCount > POPULAR_COUNT) {
-       return (
-         <div>This post is getting really popular, don't miss out!</div>
-       );
+      return (
+        <div>
+          This post is getting really popular, don't miss out!
+        </div>
+      );
     }
   }
 
   _getComments() {
     return this.state.comments.map((comment) => {
-      return (<Comment
-               author={comment.author}
-               body={comment.body}
-               avatarUrl={comment.avatarUrl}
-               key={comment.id} />);
+      return (
+        <Comment
+          author={comment.author}
+          body={comment.body}
+          avatarUrl={comment.avatarUrl}
+          key={comment.id} />
+      );
     });
   }
 
@@ -200,13 +232,25 @@ class CommentForm extends React.Component {
 
   render() {
     return (
-      <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
-        <label>New comment</label>
+      <form
+        className="comment-form"
+        onSubmit={this._handleSubmit.bind(this)}>
+        <label>
+          New comment
+        </label>
         <div className="comment-form-fields">
-          <input placeholder="Name:" ref={c => this._author = c} />
-          <textarea placeholder="Comment:" ref={c => this._body = c} onChange={this._getCharacterCount.bind(this)}></textarea>
+          <input
+            placeholder="Name:"
+            ref={c => this._author = c} />
+          <textarea
+            placeholder="Comment:"
+            ref={c => this._body = c}
+            onChange={this._getCharacterCount.bind(this)}>
+          </textarea>
         </div>
-        <p>{this.state.characters} characters</p>
+        <p>
+          {this.state.characters} characters
+        </p>
         <div className="comment-form-actions">
           <button type="submit">
             Post comment
@@ -225,9 +269,9 @@ class CommentForm extends React.Component {
   _handleSubmit(event) {
     event.preventDefault();
     if (!this._author.value || !this._body.value){
-          alert("Please enter you name and comment");
-          return; // don't add comment of nothing
-        }
+      alert("Please enter you name and comment");
+      return; // don't add comment of nothing
+    }
 
 
     this.props.addComment(this._author.value, this._body.value);
@@ -258,44 +302,43 @@ for (var i = 0; i < 20; i++) {
 }
 
 ReactDOM.render(
-  <Hello/>,
+  <Hello update={false}/>,
   targets[0]
 );
 
-setInterval(function() {
-  // each compnent has a render function
-  // UPPERCASE elements are React. lowercase are normal DOM elements
 
-  ReactDOM.render(
-    <Hello/>,
-    targets[1]
-  );
+// each compnent has a render function
+// UPPERCASE elements are React. lowercase are normal DOM elements
 
-  ReactDOM.render(
-    <RobotBox
-      author="Justinian"
-      avatarUrl="http://dhg7upb7j7jqa.cloudfront.net/powering_up_with_react/assets/images/logo-course-ba8641ec-bc39-4532-897e-7743c00b3162.svg"/>,
-    targets[2]
-  );
-  ReactDOM.render(
-    <StoryBox/>,
-    targets[3]
-  );
-  ReactDOM.render(
-    <StoryBoxES5 author="King Kong"/>,
-    targets[4]
-  );
-  ReactDOM.render(
-    <Comment
-      author="cutie cat"
-      body="fud is good"
-      avatarUrl="http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png"
-      />,
-    targets[5]
-  );
-  ReactDOM.render(
-    <CommentBox/>, // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
+ReactDOM.render(
+  <Hello update={true}/>,
+  targets[1]
+);
+
+
+ReactDOM.render(
+  <RobotBox
+    author="Justinian"
+    avatarUrl="http://dhg7upb7j7jqa.cloudfront.net/powering_up_with_react/assets/images/logo-course-ba8641ec-bc39-4532-897e-7743c00b3162.svg"/>,
+  targets[2]
+);
+ReactDOM.render(
+  <StoryBox/>,
+  targets[3]
+);
+ReactDOM.render(
+  <StoryBoxES5 author="King Kong"/>,
+  targets[4]
+);
+ReactDOM.render(
+  <Comment
+    author="cutie cat"
+    body="fud is good"
+    avatarUrl="http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png"
+    />,
+  targets[5]
+);
+ReactDOM.render(
+  <CommentBox/>, // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
     targets[6]
   );
-
-}, 2000)

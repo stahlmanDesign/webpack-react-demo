@@ -13,7 +13,13 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015']
                 }
-      }
-    ]
+            },
+            {
+                // integrate jquery
+                //http://reactkungfu.com/2015/10/integrating-jquery-chosen-with-webpack-using-imports-loader/
+                test: /vendor\/.+\.(jsx|js)$/,
+                loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+            }
+        ]
     }
 }
