@@ -9,6 +9,7 @@ class Hello extends React.Component {
   constructor(){
     super(); // must call as first thing
     this.state = {time : ""}; // set inital state
+    $("h1").css({"color":"red"}); // show that Jquery works
   }
 
   render() {
@@ -17,7 +18,7 @@ class Hello extends React.Component {
     var nowString = now.toTimeString();
     var self = this;
     if (this.props.update){
-      setInterval(function() {
+      this._timer = setInterval(function() {
         self._setTime(nowString)
       }, 1000)
     }else{
@@ -36,8 +37,12 @@ class Hello extends React.Component {
       this.setState({time: nowString})
     }
   }
-}
+  componentDidMount() {} // should use timer here to avoid memory leak
+  componentWillUnmount(){
 
+    clearInterval(this._timer); // avoid memory leak of tons of timers
+  }
+}
 
 class RobotBox extends React.Component {
   render() {
@@ -45,7 +50,7 @@ class RobotBox extends React.Component {
     return <div>
       Hello from
       <span className="message">
-        {`Mr. ${this.props.author}’s friend`}
+        {` Mr. ${this.props.author}’s friend`}
         {this.props.topic}
       </span>
       <img src={this.props.avatarUrl}/>
@@ -283,6 +288,62 @@ class CommentForm extends React.Component {
   }
 }
 
+class LoadedText extends React.Component {
+  // lifecycle methods — 3 main ones - called when rendered for first time (init), or when about to be removed (kill)
+  // componentWillMount() <- called before component is rendered
+  // componentDidMount() <- when done rendering - using timers here
+  // componentWillUnmount() <- when about to be removed from DOM
+  // more info https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods
+  // mounting means being rendered for the first time
+
+  constructor(){
+    super();
+
+    this.state = {
+      showComments:false,
+      comments: []
+    }
+
+
+  }
+
+  render(){
+
+    let comments = this._getComments((comments) =>{
+      console.log(comments)
+    });
+
+    return <div>
+      hey? {comments}, {}
+    </div>
+  }
+
+
+  _fetchComments() {
+    $.ajax({
+      method: 'GET',
+      url: 'data.json',
+      success: (comments) => {
+        console.log(comments)
+        this.setState({comments:comments})
+        console.log("success")
+      },
+      error: (e)=>{
+        console.log(e)
+      }
+    });
+  }
+
+  componentWillMount(){
+    this._fetchComments()
+  }
+
+  _getComments() {
+    return this.state.comments.map((comment) =>
+      comment.body
+    )
+  }
+}
 
 
 
@@ -342,3 +403,8 @@ ReactDOM.render(
   <CommentBox/>, // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
     targets[6]
   );
+
+  ReactDOM.render(
+    <LoadedText/>, // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
+      targets[7]
+    );

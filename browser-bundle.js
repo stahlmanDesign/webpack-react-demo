@@ -83,6 +83,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Hello).call(this));
 
 	    _this.state = { time: "" }; // set inital state
+	    (0, _jquery2.default)("h1").css({ "color": "red" }); // show that Jquery works
 	    return _this;
 	  }
 
@@ -94,7 +95,7 @@
 	      var nowString = now.toTimeString();
 	      var self = this;
 	      if (this.props.update) {
-	        setInterval(function () {
+	        this._timer = setInterval(function () {
 	          self._setTime(nowString);
 	        }, 1000);
 	      } else {
@@ -116,6 +117,16 @@
 	      if (nowString != this.state.time) {
 	        this.setState({ time: nowString });
 	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {} // should use timer here to avoid memory leak
+
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+
+	      clearInterval(this._timer); // avoid memory leak of tons of timers
 	    }
 	  }]);
 
@@ -142,7 +153,7 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'message' },
-	          'Mr. ' + this.props.author + '’s friend',
+	          ' Mr. ' + this.props.author + '’s friend',
 	          this.props.topic
 	        ),
 	        _react2.default.createElement('img', { src: this.props.avatarUrl })
@@ -489,6 +500,80 @@
 	  return CommentForm;
 	}(_react2.default.Component);
 
+	var LoadedText = function (_React$Component8) {
+	  _inherits(LoadedText, _React$Component8);
+
+	  // lifecycle methods — 3 main ones - called when rendered for first time (init), or when about to be removed (kill)
+	  // componentWillMount() <- called before component is rendered
+	  // componentDidMount() <- when done rendering - using timers here
+	  // componentWillUnmount() <- when about to be removed from DOM
+	  // more info https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods
+	  // mounting means being rendered for the first time
+
+	  function LoadedText() {
+	    _classCallCheck(this, LoadedText);
+
+	    var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(LoadedText).call(this));
+
+	    _this9.state = {
+	      showComments: false,
+	      comments: []
+	    };
+
+	    return _this9;
+	  }
+
+	  _createClass(LoadedText, [{
+	    key: 'render',
+	    value: function render() {
+
+	      var comments = this._getComments(function (comments) {
+	        console.log(comments);
+	      });
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'hey? ',
+	        comments,
+	        ', '
+	      );
+	    }
+	  }, {
+	    key: '_fetchComments',
+	    value: function _fetchComments() {
+	      var _this10 = this;
+
+	      _jquery2.default.ajax({
+	        method: 'GET',
+	        url: 'data.json',
+	        success: function success(comments) {
+	          console.log(comments);
+	          _this10.setState({ comments: comments });
+	          console.log("success");
+	        },
+	        error: function error(e) {
+	          console.log(e);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this._fetchComments();
+	    }
+	  }, {
+	    key: '_getComments',
+	    value: function _getComments() {
+	      return this.state.comments.map(function (comment) {
+	        return comment.body;
+	      });
+	    }
+	  }]);
+
+	  return LoadedText;
+	}(_react2.default.Component);
+
 	// set up divs to render components
 
 
@@ -525,6 +610,9 @@
 	}), targets[5]);
 	_reactDom2.default.render(_react2.default.createElement(CommentBox, null), // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
 	targets[6]);
+
+	_reactDom2.default.render(_react2.default.createElement(LoadedText, null), // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
+	targets[7]);
 
 /***/ },
 /* 1 */
