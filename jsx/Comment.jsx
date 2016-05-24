@@ -20,6 +20,7 @@ class Comment extends React.Component {
 
     return(
       <div className="comment">
+        <h2>Button toggle, state change and redraw by React. No DOM manipulation</h2>
         <img
           src={this.props.avatarUrl}
           alt={`${this.props.author}'s picture`} />

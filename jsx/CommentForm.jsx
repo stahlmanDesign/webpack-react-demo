@@ -20,19 +20,20 @@ class CommentForm extends React.Component {
           <input
             placeholder="Name:"
             ref={c => this._author = c} />
+          <br/>
           <textarea
             placeholder="Comment:"
+
             ref={c => this._body = c}
             onChange={this._getCharacterCount.bind(this)}>
           </textarea>
         </div>
-        <p>
-          {this.state.characters} characters
-        </p>
+
         <div className="comment-form-actions">
           <button type="submit">
             Post comment
           </button>
+          <span className="num-characters">{this.state.characters} characters</span>
         </div>
       </form>
     );

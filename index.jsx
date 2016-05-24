@@ -73,8 +73,8 @@ ReactDOM.render(
 //increment += 1;
 ReactDOM.render(
   <Comment
-    author="Cutie cat"
-    body="fud is good"
+    author="James Dean"
+    body="Dead at 27"
     avatarUrl="http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png"
     />,
   targets[increment]
@@ -82,7 +82,7 @@ ReactDOM.render(
 
 increment += 1;
 ReactDOM.render(
-  <CommentBox/>, // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
+  <CommentBox avatarUrl="http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png"/>, // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
     targets[increment]
   );
 

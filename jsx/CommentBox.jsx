@@ -9,8 +9,8 @@ class CommentBox extends React.Component {
     this.state = {
       showComments: false,
       comments: [
-        { id: 1, author: 'Morgan McCircuit', body: 'Great picture!', avatarUrl: 'images/default-avatar.png' },
-        { id: 2, author: 'Bending Bender', body: 'Excellent stuff', avatarUrl: 'images/default-avatar.png' }
+        { id: 1, author: 'Goth Girl', body: 'Our souls are devoured in The Void', avatarUrl: 'http://lorempixel.com/200/200/people/1/' },
+        { id: 2, author: 'Bad Mom', body: 'My daughter is a real princess', avatarUrl: 'http://lorempixel.com/200/200/people/6/' }
       ]
     };
   }
@@ -45,6 +45,7 @@ class CommentBox extends React.Component {
 
   _getComments() {
     return this.state.comments.map((comment) => {
+      if (!comment.avatarUrl) comment.avatarUrl = "http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png"
       return (
         <Comment
           author={comment.author}

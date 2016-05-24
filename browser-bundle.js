@@ -139,13 +139,13 @@
 
 	//increment += 1;
 	_reactDom2.default.render(_react2.default.createElement(_Comment2.default, {
-	  author: 'Cutie cat',
-	  body: 'fud is good',
+	  author: 'James Dean',
+	  body: 'Dead at 27',
 	  avatarUrl: 'http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png'
 	}), targets[increment]);
 
 	increment += 1;
-	_reactDom2.default.render(_react2.default.createElement(_CommentBox2.default, null), // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
+	_reactDom2.default.render(_react2.default.createElement(_CommentBox2.default, { avatarUrl: 'http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png' }), // CommentForm doesn't need to be rendered, because it is only inside of CommentBox
 	targets[increment]);
 
 	increment += 1;
@@ -30581,6 +30581,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'comment' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Button toggle, state change and redraw by React. No DOM manipulation'
+	        ),
 	        _react2.default.createElement('img', {
 	          src: this.props.avatarUrl,
 	          alt: this.props.author + '\'s picture' }),
@@ -30656,7 +30661,7 @@
 
 	    _this.state = {
 	      showComments: false,
-	      comments: [{ id: 1, author: 'Morgan McCircuit', body: 'Great picture!', avatarUrl: 'images/default-avatar.png' }, { id: 2, author: 'Bending Bender', body: 'Excellent stuff', avatarUrl: 'images/default-avatar.png' }]
+	      comments: [{ id: 1, author: 'Goth Girl', body: 'Our souls are devoured in The Void', avatarUrl: 'http://lorempixel.com/200/200/people/1/' }, { id: 2, author: 'Bad Mom', body: 'My daughter is a real princess', avatarUrl: 'http://lorempixel.com/200/200/people/6/' }]
 	    };
 	    return _this;
 	  }
@@ -30703,6 +30708,7 @@
 	    key: '_getComments',
 	    value: function _getComments() {
 	      return this.state.comments.map(function (comment) {
+	        if (!comment.avatarUrl) comment.avatarUrl = "http://campus.codeschool.com/powering_up_with_react/assets/javascripts/preview/images/default-avatar.png";
 	        return _react2.default.createElement(_Comment2.default, {
 	          author: comment.author,
 	          body: comment.body,
@@ -30802,18 +30808,14 @@
 	            ref: function ref(c) {
 	              return _this2._author = c;
 	            } }),
+	          _react2.default.createElement("br", null),
 	          _react2.default.createElement("textarea", {
 	            placeholder: "Comment:",
+
 	            ref: function ref(c) {
 	              return _this2._body = c;
 	            },
 	            onChange: this._getCharacterCount.bind(this) })
-	        ),
-	        _react2.default.createElement(
-	          "p",
-	          null,
-	          this.state.characters,
-	          " characters"
 	        ),
 	        _react2.default.createElement(
 	          "div",
@@ -30822,6 +30824,12 @@
 	            "button",
 	            { type: "submit" },
 	            "Post comment"
+	          ),
+	          _react2.default.createElement(
+	            "span",
+	            { className: "num-characters" },
+	            this.state.characters,
+	            " characters"
 	          )
 	        )
 	      );
